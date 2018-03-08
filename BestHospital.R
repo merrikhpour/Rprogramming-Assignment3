@@ -3,21 +3,24 @@
 setwd("/Users/Merrikhpour/Desktop/R Programming Course/week4") 
 #install.packages("plyr")
 library(plyr)
-best <- function (state= "TX", outcome="heart attack") {
-        state<- character()
-        outcome <- character()
+datatest1<- read.csv("outcome-of-care-measures.csv", na.strings = "Not Available", stringsAsFactors=FALSE)
+df<- data.frame()
+# heart attack is column 11, heart failure is column 17, and pneumonia is column 23. 
+
+#datatest1<- read.csv("outcome-of-care-measures.csv", na.strings = "Not Available", stringsAsFactors=FALSE)
+
+column_index <- c(11,17,23)
+df<- datatest1[ ,c(2,7,column_index)]
+names(df)<- c("Hospital Name", "State", "Heart Attack Death", "Heart Failure Death", "Pneumonia Death"  )
+## read outcome data
+
+best <- function (state= character(), outcome= character()) {
+       # attach(datatest1)
+        #attach(df)
         bestanswer<- character()
         besthospitalname<- character()
-        datatest1<- data.frame()
-        df<- data.frame()
-        # heart attack is column 11, heart failure is column 17, and pneumonia is column 23. 
         
-        datatest1<- read.csv("outcome-of-care-measures.csv", na.strings = "Not Available", stringsAsFactors=FALSE)
         
-        column_index <- c(11,17,23)
-        df<- datatest1[,c(2,7,column_index)]
-        names(df)<- c("Hospital Name", "State", "Heart Attack Death", "Heart Failure Death", "Pneumonia Death"  )
-        ## read outcome data
         
         #datatest1<- read.csv("outcome-of-care-measures.csv", colClasses = "character")
         
@@ -59,6 +62,7 @@ best <- function (state= "TX", outcome="heart attack") {
                         bestanswer<- besthospitals$state
                         bestanswer
                 }
+                return(bestanswer)
         }
         
         
@@ -66,5 +70,5 @@ best <- function (state= "TX", outcome="heart attack") {
         ## rate   
         
         assign("besthospitalname", bestanswer, envir = .GlobalEnv)
-        besthospitalname
+        return(besthospitalname)
 }

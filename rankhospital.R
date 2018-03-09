@@ -24,62 +24,76 @@ rankhospital<- function(state, outcome, num= "best") {
         else if ((sum(state==levels((as.factor(df$State))))!=0) && (sum(outcome==c("heart attack", "heart failure", "pneumonia"))!=0) ){ 
                 
                 if (outcome=="heart attack") {
-                        ##print(df$State)
+
                         arrangeddf <- arrange(df,df$State,df$`Heart Attack Death`, df$`Hospital Name`)
-                        #print(arrangeddf)
                         arrangeddfhearattackcompletecases <- arrangeddf[complete.cases(arrangeddf$`Heart Attack Death`), ]
-                        #print(arrangeddfhearattackcompletecases)
                         splitdf<- split(arrangeddfhearattackcompletecases, arrangeddfhearattackcompletecases$State)
                         orderedhospitals<- sapply(splitdf, function(x) x[[1]])
-                        #print(splitdf)
                         if (num=="best") {  
                                 nthhospitals <- lapply(orderedhospitals, function(L) L[1])
                                 nthhospitals
                                 }
                         else if (num=="worst") { 
-                                #print(orderedhospitals)
+                                
                                 nthhospitals <- lapply(orderedhospitals, tail, n=1)
                                 nthhospitals
                         }
                         else {
-                                #print(orderedhospitals)
-                                #print(class(orderedhospitals))
-                                #orderedhospitalsunlisted <- unlist(orderedhospitals)
-                                #print(orderedhospitalsunlisted)
-                                nthhospitals <- lapply(orderedhospitals, function(L) L[num]) 
                                 
-                        }
-                        #print(state)
-                        #print(outcome)
-                        # bestanswer<- besthospitals$state
-                        #print(bestanswer)
-                        #bestanswer
+                                nthhospitals <- lapply(orderedhospitals, function(L) L[num]) 
+                                }
+                        
                         nthhospitals
                 }
                 
-                ####        if (outcome=="heart failure") {
-                        
-                ####        arrangeddf <- arrange(df,df$State,df$`Heart Failure Death`, df$`Hospital Name`)
-                ####        splitdf<- split(arrangeddf, arrangeddf$State)
-                ####        orderedhospitals<- sapply(splitdf, function(x) x[[1]])
-                        #besthospitals<- lapply(orderedhospitals, function(L) L[[1]])
-                        #besthospitals
-                        #bestanswer<- besthospitals$state
-                        #bestanswer
-                ####        }
+                       if (outcome=="heart failure") {
                 
-                ####        if (outcome=="pneumonia") {
-                        
-                ####        arrangeddf <- arrange(df,df$State,df$`Pneumonia Death`, df$`Hospital Name`)
-                ####        splitdf<- split(arrangeddf, arrangeddf$State)
-                ####        orderedhospitals<- sapply(splitdf, function(x) x[[1]])
-                        #besthospitals<- lapply(orderedhospitals, function(L) L[[1]])
-                        #besthospitals
-                ####        }
-                # return(bestanswer)
+                               arrangeddf <- arrange(df,df$State,df$`Heart Failure Death`, df$`Hospital Name`)
+                               arrangeddfheartfailurecompletecases <- arrangeddf[complete.cases(arrangeddf$`Heart Failure Death`), ]
+                               splitdf<- split(arrangeddfheartfailurecompletecases, arrangeddfheartfailurecompletecases$State)
+                               orderedhospitals<- sapply(splitdf, function(x) x[[1]])
+                               if (num=="best") {  
+                                       nthhospitals <- lapply(orderedhospitals, function(L) L[1])
+                                       nthhospitals
+                               }
+                               else if (num=="worst") { 
+                                       
+                                       nthhospitals <- lapply(orderedhospitals, tail, n=1)
+                                       nthhospitals
+                               }
+                               else {
+                                       
+                                       nthhospitals <- lapply(orderedhospitals, function(L) L[num]) 
+                               }
+                               
+                               nthhospitals
+                       }
                 
                 
+                    if (outcome=="pneumonia") {
                 
+                            arrangeddf <- arrange(df,df$State,df$`Pneumonia Death`, df$`Hospital Name`)
+                            arrangeddfpneumoniacompletecases <- arrangeddf[complete.cases(arrangeddf$`Pneumonia Death`), ]
+                            splitdf<- split(arrangeddfpneumoniacompletecases, arrangeddfpneumoniacompletecases$State)
+                            orderedhospitals<- sapply(splitdf, function(x) x[[1]])
+                            if (num=="best") {  
+                                    nthhospitals <- lapply(orderedhospitals, function(L) L[1])
+                                    nthhospitals
+                            }
+                            else if (num=="worst") { 
+                                    
+                                    nthhospitals <- lapply(orderedhospitals, tail, n=1)
+                                    nthhospitals
+                            }
+                            else {
+                                    
+                                    nthhospitals <- lapply(orderedhospitals, function(L) L[num]) 
+                            }
+                            
+                            nthhospitals
+                    }
+                
+    
                 assign("nthhospitalsGlobal", nthhospitals, envir = .GlobalEnv)
                 nthhospitalsunlisted<- unlist(nthhospitalsGlobal)
                 nthanswer<- nthhospitalsunlisted[state]

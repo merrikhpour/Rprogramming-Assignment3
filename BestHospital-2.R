@@ -56,8 +56,9 @@ best <- function (state= character(), outcome= character()) {
                         splitdf<- split(arrangeddf, arrangeddf$State)
                         orderedhospitals<- sapply(splitdf, function(x) x[[1]])
                         besthospitals<- lapply(orderedhospitals, function(L) L[[1]])
-                        bestanswer<- besthospitals$state
-                        bestanswer
+                        besthospitals
+                        #bestanswer<- besthospitals$state
+                        #bestanswer
                 }
                 
                 if (outcome=="pneumonia") {
@@ -66,7 +67,6 @@ best <- function (state= character(), outcome= character()) {
                         splitdf<- split(arrangeddf, arrangeddf$State)
                         orderedhospitals<- sapply(splitdf, function(x) x[[1]])
                         besthospitals<- lapply(orderedhospitals, function(L) L[[1]])
-                        #bestanswer<- besthospitals$state
                         besthospitals
                 }
                # return(bestanswer)

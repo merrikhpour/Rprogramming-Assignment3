@@ -31,10 +31,10 @@ best <- function (state= character(), outcome= character()) {
         
         ## check that state and outcome is valid
         
-        ##if ((sum(state==levels(df$State))==0) && (sum(outcome==c("heart attack", "heart failure", "pneumonia"))==0) ) { paste("Error in best (",state, outcome, ") : invalid state and outcome", sep = " ")}
-        ##else if (sum(state==levels(df$State))==0) { paste("Error in best (",state, outcome, ") : invalid state", sep = " ")} 
-        ##else if (sum(outcome==c("heart attack", "heart failure", "pneumonia"))==0) { paste("Error in best (",state, outcome, ") : invalid outcome", sep = " ")}
-        ##else if ((sum(state==levels(df$State))!=0) && (sum(outcome==c("heart attack", "heart failure", "pneumonia"))!=0) ){ 
+        if ((sum(state==levels((as.factor(df$State))))==0) && (sum(outcome==c("heart attack", "heart failure", "pneumonia"))==0) ) { paste("Error in best (",state, outcome, ") : invalid state and outcome", sep = " ")}
+        else if (sum(state==levels((as.factor(df$State))))==0) { paste("Error in best (",state, outcome, ") : invalid state", sep = " ")} 
+        else if (sum(outcome==c("heart attack", "heart failure", "pneumonia"))==0) { paste("Error in best (",state, outcome, ") : invalid outcome", sep = " ")}
+        else if ((sum(state==levels((as.factor(df$State))))!=0) && (sum(outcome==c("heart attack", "heart failure", "pneumonia"))!=0) ){ 
                 
                 if (outcome=="heart attack") {
                         ##print(df$State)
@@ -70,18 +70,21 @@ best <- function (state= character(), outcome= character()) {
                         besthospitals
                 }
                # return(bestanswer)
-        #}
+       
+                assign("besthospitalsGlobal", besthospitals, envir = .GlobalEnv)
+                besthospitalsunlisted<- unlist(besthospitalsGlobal)
+                bestanswer<- besthospitalsunlisted[state]
+                assign("bestanswerGlobal", bestanswer, envir = .GlobalEnv)
+                bestanswerGlobal     
+                
+                 }
         
         ### besthospitalsunlisted<- unlist(besthospitals)
        ### bestanswer<- besthospitals-unlisted[state]
         #### assign("bestanswerGlobal", bestanswer, envir = .GlobalEnv)
         #### bestanswerGlobal
         
-        assign("besthospitalsGlobal", besthospitals, envir = .GlobalEnv)
-        besthospitalsunlisted<- unlist(besthospitalsGlobal)
-        bestanswer<- besthospitalsunlisted[state]
-        assign("bestanswerGlobal", bestanswer, envir = .GlobalEnv)
-        bestanswerGlobal
+       
         #return(besthospitalname)
         #print(class(besthospitals))
         
@@ -91,4 +94,5 @@ best <- function (state= character(), outcome= character()) {
         #besthospitals
         #assign("besthospitalname", bestanswer, envir = .GlobalEnv)
         #return(besthospitalname)
+        
 }
